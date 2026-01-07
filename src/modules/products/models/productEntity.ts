@@ -1,3 +1,4 @@
+import { createEntityAdapter } from "@reduxjs/toolkit"
 
 
 export interface ProductEntity {
@@ -6,6 +7,8 @@ export interface ProductEntity {
     price:number
     description:string
     category:string
-    thumbnail:string
+    image:string
     
 }
+
+export const ProductEntityAdapter=createEntityAdapter<ProductEntity>()

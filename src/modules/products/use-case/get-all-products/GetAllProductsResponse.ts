@@ -7,4 +7,5 @@ export interface GetAllProductsResponse {
     skip:number;
     limit:number;
 
+
 }

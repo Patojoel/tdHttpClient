@@ -53,9 +53,5 @@ export const createTestStore = (
 ) => createStore({} as any, preloadedState);
 
 export type AppStore = ReturnType<typeof createStore>;
-export type RootState = ReturnType<typeof rootReducer>;
-export type AppDispatch = ThunkDispatch<
-  RootState & PersistPartial,
-  Dependencies,
-  Action
->;
+export type RootState = ReturnType<typeof rootReducer> & PersistPartial;
+export type AppDispatch = ThunkDispatch<RootState, Dependencies, Action>;
