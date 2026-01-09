@@ -2,7 +2,7 @@ import { useProducts } from "./hooks/useProducts";
 import { Plus } from "lucide-react";
 import { Button } from "@/component/ui/button";
 import { ProductTable } from "./components/ProductTable";
-
+import { InputSearch } from "@/gererics/inputs/InputSearch";
 export const ViewProductsList = () => {
   const behavior = useProducts();
 
@@ -21,6 +21,16 @@ export const ViewProductsList = () => {
           <Plus size={18} />
           Nouveau Produit
         </Button>
+      </div>
+
+      <div className="w-full max-w-sm">
+        <InputSearch
+          value={behavior.searchTerm}
+          onChange={(e) => behavior.handleSearch(e.target.value)}
+          placeholder="Rechercher un produit ..."
+          defaultValue={behavior.searchTerm}
+          
+        />
       </div>
 
       <ProductTable behavior={behavior} />

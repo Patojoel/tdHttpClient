@@ -11,6 +11,7 @@ export class ProductHttpGateway implements ProductGateway {
   async getAllProducts(
     command: GetAllProductsCommand
   ): Promise<GetAllProductsResponse> {
+    console.log("http", command);
     const result = await this.httpProvider
       .get(productsRoutes.getAllProducts(command))
       .then((res) => res.json());

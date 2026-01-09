@@ -1,14 +1,7 @@
 import {useEffect, useState} from "react";
+import { useSearchParams } from "react-router-dom";
 
-export interface QueryPaginationBehavior {
-  page: number;
-  limit: number;
-  handleQueryPagination: (value: string) => void;
-  handleChangedPage: (value: number) => void;
-  handleChangedLimit: (value: number) => void;
-  handleQueryPaginationData: (page: number, limit: number) => void;
-  total: number;
-}
+
 
 interface OwnProps {
   initialLimit?: number;
@@ -25,9 +18,13 @@ export const useQueryPagination = (
     initialPage: 1,
     initialLimit: 20,
     total: 0,
-  }): QueryPaginationBehavior => {
-  const [page, setPage] = useState<number>(initialPage ?? 1);
-  const [limit, setLimit] = useState(initialLimit || 20);
+  }) => {
+    const params = Object.fromEntries(
+      new URLSearchParams(location.search.split("?")[1] ?? "")
+    );
+  const [page, setPage] = useState<number>(Number(params.page ?? initialPage ?? 1));
+  const [limit, setLimit] = useState(Number(params.limit ?? initialLimit ?? 20));
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const handleQueryPagination = (value: string) => {
     const paginatorParams = value.split("/");
@@ -44,12 +41,26 @@ export const useQueryPagination = (
     callback?.(p, l);
     setLimit(l);
     setPage(p);
+    updateQueryParams({
+      page : p.toString(),
+      limit:l.toString()
+    })
+
   }
 
   useEffect(() => {
     if(!!initialPage) setPage(initialPage);
     if(!!initialLimit) setLimit(initialLimit);
   }, [initialLimit, initialPage]);
+
+  const updateQueryParams=(params:Record<string,string>)=>{
+ const oldQuery = Object.fromEntries(searchParams);
+    setSearchParams({
+      ...oldQuery,
+      ...params
+    });
+  };
+
 
   return {
     limit,
@@ -59,5 +70,9 @@ export const useQueryPagination = (
     handleChangedLimit: setLimit,
     handleQueryPaginationData,
     total: total || 0,
+    updateQueryParams,
   }
 }
+
+
+export  type QueryPaginationBehavior = ReturnType<typeof useQueryPagination>

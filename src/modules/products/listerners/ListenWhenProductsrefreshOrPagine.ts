@@ -6,8 +6,6 @@ export const listenWhenProductsRefreshOrPagine = () =>
   startAppListening({
     actionCreator: ProductsActions,
     effect: async (action, { dispatch }) => {
-      const { limit, page } = action.payload;
-
-      dispatch(GetAllProductsAsync({ limit, page }));
+      dispatch(GetAllProductsAsync(action.payload));
     },
   });

@@ -3,5 +3,5 @@ import { GetAllProductsCommand } from "../../use-case/get-all-products/GetALLPro
 
 
 export const productsRoutes = {
-    getAllProducts:(command:GetAllProductsCommand)=> `/products?limit=${command.limit}&skip=${command.page*command.limit}`,
+    getAllProducts:(command:GetAllProductsCommand)=> `/products${command.search ? `/search?q=${command.search}&` : `?`}limit=${command.limit}&skip=${(command.page - 1)*command.limit}`,
 }

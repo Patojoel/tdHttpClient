@@ -11,7 +11,6 @@ type ProductState = EntityState<ProductEntity, string> & {
   totalItems: number;
   currentPage: number;
   itemsPerPage: number;
-  getProductsCommand: GetAllProductsCommand;
 };
 
 const initialProductsState: ProductState = ProductEntityAdapter.getInitialState(
@@ -21,10 +20,8 @@ const initialProductsState: ProductState = ProductEntityAdapter.getInitialState(
     totalItems: 0,
     currentPage: 1,
     itemsPerPage: 10,
-    getProductsCommand: {
-      limit: 10,
-      page: 1,
-    },
+
+   
   }
 );
 
@@ -36,7 +33,6 @@ export const ProductSlice = createSlice({
     builder
       .addCase(GetAllProductsAsync.pending, (state, action) => {
         state.getAllLoading = LoadingState.pending;
-        state.getProductsCommand = action.meta.arg;
       })
       .addCase(GetAllProductsAsync.fulfilled, (state, action) => {
         state.getAllLoading = LoadingState.success;

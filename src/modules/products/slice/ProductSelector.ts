@@ -21,13 +21,10 @@ const getCurrentPage = createSelector(
   getProductState,
   (state) => state.currentPage
 );
-const getProductCommand = (state: RootState) =>
-  getProductState(state).getProductsCommand;
 
 export const ProductSelector = {
   SelectAllProducts,
   getLoadingState,
   getTotalItems,
   getCurrentPage,
-  getProductCommand,
 };
