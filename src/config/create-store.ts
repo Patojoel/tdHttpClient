@@ -48,9 +48,19 @@ export const createStore = (
   });
 
 export const createTestStore = (
-  {}: Partial<Dependencies> = {},
-  preloadedState?: Partial<RootState & PersistPartial>
-) => createStore({} as any, preloadedState);
+  dependencies: Partial<Dependencies> = {},
+  preloadedState?: Partial<ReturnType<typeof rootReducer>>
+) =>
+  configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        thunk: {
+          extraArgument: dependencies as Dependencies,
+        },
+      }).prepend(createAppListenerMiddleware.middleware),
+    preloadedState: preloadedState as any,
+  });
 
 export type AppStore = ReturnType<typeof createStore>;
 export type RootState = ReturnType<typeof rootReducer> & PersistPartial;

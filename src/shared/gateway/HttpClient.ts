@@ -3,9 +3,9 @@ export abstract class HttpClient {
     url: string,
     data: Object,
     signal?: AbortSignal,
-    blob?: boolean
+    blob?: boolean,
+    credentials?: RequestCredentials
   ): Promise<Response>;
 
   abstract get(url: string, signal?: AbortSignal): Promise<Response>;
-
 }

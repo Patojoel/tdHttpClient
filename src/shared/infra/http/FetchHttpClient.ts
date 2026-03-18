@@ -7,7 +7,8 @@ class FetchHttpClient implements HttpClient {
     url: string,
     data: Object,
     signal?: AbortSignal,
-    blob?: boolean
+    blob?: boolean,
+    credentials?: RequestCredentials
   ): Promise<Response> {
     return this.fetchData(url, {
       method: "POST",
@@ -18,6 +19,7 @@ class FetchHttpClient implements HttpClient {
       body: JSON.stringify(data),
       signal,
       blob,
+      credentials,
     });
   }
   get(url: string, signal?: AbortSignal): Promise<Response> {
@@ -37,7 +39,7 @@ class FetchHttpClient implements HttpClient {
 
   private async fetchData(
     url: string,
-    requestInit?: RequestInit & { blob?: boolean }
+    requestInit?: RequestInit & { blob?: boolean },
   ): Promise<Response> {
     let fetchUrl = url;
     if (!url.includes("http")) {
@@ -66,5 +68,5 @@ class FetchHttpClient implements HttpClient {
     });
   }
 }
-const httpClient = new FetchHttpClient();
-export default httpClient;
+const fecthHttpClient = new FetchHttpClient();
+export default fecthHttpClient;

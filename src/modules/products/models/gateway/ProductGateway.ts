@@ -4,6 +4,5 @@ import type { GetAllProductsResponse } from "../../use-case/get-all-products/Get
 
 
 export interface ProductGateway {
-
     getAllProducts(command:GetAllProductsCommand): Promise<GetAllProductsResponse>;
 }
